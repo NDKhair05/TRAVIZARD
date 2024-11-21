@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Danh sách chuyến đi ở Việt Nam</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+  <!-- Fonts -->
+  <!-- CSS files -->
+  <link rel="stylesheet" href="assets/css/font-awesome.css" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/image-hover.css">
+  <link href="assets/css/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+
+  <link rel="icon"
+    href="https://scontent.xx.fbcdn.net/v/t1.15752-9/440835527_1136786374199039_1045185982473270085_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=iB99M7OTNLoQ7kNvgEZtr6h&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&_nc_gid=Aj6RDrEfR2urSpW6rcb08aA&oh=03_Q7cD1QGuYoMgvnALzuhtnf7JaJnE_ytatI5T9CB7ZYxRYbdceg&oe=672F2116"
+    type="image/x-icon">
+
+
+  <!-- CSS files -->
+  <!-- JavaScript files -->
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/aos.js"></script>
+  <script src="assets/js/sweetalert.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <!-- JavaScript files -->
+
+</head>
+
+<body>
+  <div id="navbarPlaceholder"></div>
+  <!-- Page content -->
+  <div class="container-fill">
+    <div class="row p-3 mt-2 tour-types d-flex justify-content-center" data-aos="fade-right">
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="vietnamTours.html"><i class="fa-solid fa-glasses fa-xl mx-2"></i>DU LỊCH
+          TRONG NƯỚC</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="foreignTours.html"><i class="fa-solid fa-wine-glass fa-xl mx-2"></i>DU LỊCH
+          NƯỚC NGOÀI</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="introduction.html"><i class="fa-solid fa-home fa-xl mx-2"></i>GIỚI THIỆU</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+        <a class="tours-heading-link" href="hotels.html"><i class="fa-solid fa fa-hotel fa-xl mx-2"></i>CHO THUÊ KHÁCH
+          SẠN</a>
+      </div>
+
+    </div>
+    <div class="d-flex flex-column mx-5 mt-5 mb-3">
+      <a class="tours-heading-link">DANH SÁCH KHÁC SẠN CÓ PHÍ RẺ NHẤT</a>
+      <a>Đặt phòng khách sạn - Tổng hợp hơn 200,000 khách sạn trong nước và quốc tế đang có khuyến mãi giá tốt, quý
+        khách có thể dễ dàng tìm kiếm phòng khách sạn cần đặt ngay tại website công ty <b>TRAVIZARD</b>. Bên cạnh việc
+        có thể đặt mua được phòng khách sạn giá rẻ trực tuyến đơn giản, an toàn, tiết kiệm...quý khách còn có thể tham
+        khảo, so sánh giá phòng khách sạn được cập nhật liên tục tại thời điểm quý khách muốn đặt mua.</a>
+    </div>
+    <div class="px-2">
+      <div class="row" id="hotels"></div>
+      <div class="row">
+        <div class="d-flex justify-content-center col" id="pagination"></div>
+      </div>
+      <div class="mt-5 text-center">
+        <span class="h3">Tại sao lại lựa chọn đặt chỗ tại Travizard?</span>
+      </div>
+      <div class="mt-3 mb-5">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <div class="why-choose-us-picture">
+                <img class="img-fluid object-fit-cover" loading="lazy" src="assets/images/1-why-choose-us-hotels.webp">
+              </div>
+              <div class="why-choose-us-title">
+                <span>Giá rẻ mỗi ngày với ưu đãi đặc biệt dành riêng cho ứng dụng</span>
+              </div>
+              <div class="why-choose-us-content">
+                <p class="fw-semibold">Đặt phòng qua ứng dụng để nhận giá tốt nhất với các khuyến mãi tuyệt vời!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <div class="why-choose-us-picture">
+                <img class="img-fluid object-fit-cover" loading="lazy" src="assets/images/2-why-choose-us-hotels.png">
+              </div>
+              <div class="why-choose-us-title">
+                <span>Phương thức thanh toán an toàn và linh hoạt</span>
+              </div>
+              <div class="why-choose-us-content">
+                <p class="fw-semibold">Giao dịch trực tuyến an toàn với nhiều lựa chọn như thanh toán tại cửa hàng tiện
+                  lợi, chuyển khoản ngân hàng, thẻ tín dụng đến Internet Banking. Không tính phí giao dịch.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <div class="why-choose-us-picture">
+                <img class="img-fluid object-fit-cover" loading="lazy" src="assets/images/3-why-choose-us-hotels.webp">
+              </div>
+              <div class="why-choose-us-title">
+                <span>Hỗ trợ khách hàng 24/7</span>
+              </div>
+              <div class="why-choose-us-content">
+                <p class="fw-semibold">Đội ngũ nhân viên hỗ trợ khách hàng luôn sẵn sàng giúp đỡ bạn trong từng bước của
+                  quá trình đặt vé.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <div class="why-choose-us-picture">
+                <img class="img-fluid object-fit-cover" loading="lazy" src="assets/images/4-why-choose-us-hotels.webp">
+              </div>
+              <div class="why-choose-us-title">
+                <span>Khách thực, đánh giá thực</span>
+              </div>
+              <div class="why-choose-us-content">
+                <p class="fw-semibold">Hơn 10.000.000 đánh giá, bình chọn đã được xác thực từ du khách sẽ giúp bạn đưa
+                  ra lựa chọn đúng đắn.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="m-5 text-center">
+        <span class="h3">Đánh giá của người dùng</span>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <div class="commentBox">
+          <div class="p-3 row border" id="contactFormContainer">
+            <div class="col-12 aos-init aos-animate" data-aos="fade-right">
+              <form>
+                <h3 class="mb-3">Gửi đánh giá</h3>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingFullnameInput" placeholder="name@example.com">
+                  <label for="floatingFullnameInput" style="font-size: 0.75rem;">Họ và tên</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="floatingEmailInput" placeholder="name@example.com">
+                  <label for="floatingEmailInput" style="font-size: 0.75rem;">Địa chỉ email</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingContent"
+                    style="height: 100px"></textarea>
+                  <label for="floatingContent">Nội dung</label>
+                </div>
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" value="" id="sendLastestMessageCheckbox">
+                  <label class="form-check-label" for="sendLastestMessageCheckbox">
+                    Gửi email thông báo cho tôi khi có phản hồi mới nhất
+                  </label>
+                </div>
+                <button id="contactButton" type="button" class="btn btn-success">Đăng bình luận</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column justify-content-center align-items-center" id="hotelsCommentsPlaceholder">
+
+      </div>
+    </div>
+
+    <!-- Chatbot Support -->
+    <div id="chatbot-container">
+      <div id="chatbot-icon">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div id="chatbot-box">
+        <div id="chatbot-header">
+          <span>CSKH</span>
+          <button id="close-chatbot">X</button>
+        </div>
+        <div id="chatbot-content">
+          <div id="chatbot-messages"></div>
+          <div id="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Nhập tin nhắn..." />
+            <button id="send-chatbot-message">Gửi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Foreign tours swiper -->
+    <div id="footerPlaceholder"></div>
+  </div>
+  <!-- Page content -->
+  <script>
+    AOS.init();
+    document.getElementById("chatbot-icon").addEventListener("click", () => {
+      document.getElementById("chatbot-box").style.display = "flex";
+    });
+
+    document.getElementById("close-chatbot").addEventListener("click", () => {
+      document.getElementById("chatbot-box").style.display = "none";
+    });
+
+    const addMessage = (sender, text) => {
+      const messagesContainer = document.getElementById("chatbot-messages");
+
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("chatbot-message", sender);
+
+      const avatarElement = document.createElement("div");
+      avatarElement.classList.add("avatar");
+
+      // Avatar tùy chỉnh theo người gửi
+      if (sender === "bot") {
+        avatarElement.style.backgroundImage = "url('assets/images/robot.png')";
+      } else if (sender === "user") {
+        avatarElement.style.backgroundImage = "url('assets/images/profile-user.png')";
+      }
+
+      const textElement = document.createElement("div");
+      textElement.classList.add("text");
+      textElement.textContent = text;
+
+      // Căn chỉnh nội dung theo người gửi
+      if (sender === "user") {
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(avatarElement);
+      } else {
+        messageElement.appendChild(avatarElement);
+        messageElement.appendChild(textElement);
+      }
+
+      messagesContainer.appendChild(messageElement);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+
+    // Gửi yêu cầu tới OpenAI API để lấy phản hồi từ ChatGPT
+    const fetchChatGPTResponse = async (userMessage) => {
+      const apiKey = "YOUR_API_KEY";  // Thay YOUR_API_KEY bằng API Key của bạn
+      const endpoint = "https://api.openai.com/v1/chat/completions";  // Cập nhật endpoint phù hợp với API mới
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",  // Bạn có thể thay đổi model nếu cần
+            messages: [{ role: "user", content: userMessage }],
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Request failed with status " + response.status);
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;  // Lấy nội dung phản hồi của chatbot
+      } catch (error) {
+        console.error("Error fetching response from OpenAI:", error);
+        return "Có lỗi khi lấy phản hồi từ chatbot.";
+      }
+    };
+
+    const sendMessage = async () => {
+      const input = document.getElementById("chatbot-input");
+      const message = input.value.trim();
+
+      if (message) {
+        // Thêm tin nhắn của người dùng
+        addMessage("user", message);
+
+        // Gọi API để lấy phản hồi từ ChatGPT
+        const botResponse = await fetchChatGPTResponse(message);
+
+        // Thêm phản hồi của ChatGPT
+        addMessage("bot", botResponse);
+
+        // Xóa nội dung nhập
+        input.value = "";
+      }
+    };
+
+    document.getElementById("send-chatbot-message").addEventListener("click", sendMessage);
+
+    document.getElementById("chatbot-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+  </script>
+  <script>
+
+  </script>
+</body>
+
+</html>

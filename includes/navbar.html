@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Navbar with Scrolling Effect</title>
+  <link rel="stylesheet" href="assets/css/font-awesome.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Reset margin/padding */
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Font and general styles */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+
+
+    .fw-bold {
+      font-weight: bold;
+    }
+
+    .fw-semibold {
+      font-weight: 600;
+    }
+
+    .text-white {
+      color: white;
+    }
+
+
+    /* Sticky navbar */
+    .sticky-navbar {
+      position: sticky;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #002033;
+      top: 45px;
+      /* Bên dưới Hotline */
+      z-index: 1030;
+      padding: 10px 0;
+      transition: transform 0.3s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hidden effect */
+    .hidden {
+      transform: translateY(-100%);
+    }
+
+    .navbar-features {
+      transform: translateY(5px);
+    }
+
+    /* Navbar features */
+    .navbar-logo {
+      transform: translateX(15%);
+      /* margin: 0 20px 0 100px; */
+    }
+
+    .navbar-logo img {
+      height: 30px;
+    }
+
+    .navbar-account {
+      transform: translateX(-15%);
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      padding: 10px;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #58b2e6;
+    }
+
+
+    .h4 {
+      font-size: 1.1rem;
+    }
+
+    .nav-item {
+      list-style: none;
+      display: inline-block;
+    }
+
+    .flash-contact {
+      margin: 0;
+    }
+
+    #top-notification {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+      background-color: #041675;
+      color: white;
+      padding: 10px 0;
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mainnav">
+    <!-- Sticky navbar -->
+    <nav class="navbar sticky-navbar">
+      <div class="navbar-logo">
+        <a href="index.html">
+          <img src="assets/images/logo-nonbackgr.png" alt="Application logo" />
+        </a>
+      </div>
+      <div class="navbar-features">
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="index.html" class="p-0 me-2 nav-link text-white fw-semibold">
+              <span class="h4 navbar-textlink">TRANG CHỦ</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="vietnamTours.html" class="p-0 me-2 nav-link text-white fw-semibold">
+              <span class="h4 navbar-textlink">TOURS</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a href="foreignTours.html" class="p-0 me-2 nav-link text-white fw-semibold">
+              <span class="h4 navbar-textlink">NƯỚC NGOÀI</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a href="hotels.html" class="p-0 me-2 nav-link text-white fw-semibold">
+              <span class="h4 navbar-textlink">KHÁCH SẠN</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="introduction.html" class="p-0 me-2 nav-link text-white fw-semibold">
+              <span class="h4 navbar-textlink">GIỚI THIỆU</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="navbar-account">
+        <div class="topbar-features">
+          <ul class="nav">
+            <li class="nav-item">
+              <a href="account.html" class="nav-link">
+                <i class="fa-solid fa-user mx-2"></i><span> Tài khoản</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="contact.html" class="nav-link">
+                <i class="fa-solid fa-envelope mx-2"></i><span>Góp ý</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="offcanvas-status" id="offcanvasPlaceholder"></div>
+    </nav>
+  </div>
+  <!--xử lý khi cuộn-->
+  <script>
+    let lastScrollTop = 0;
+    const topNotification = document.getElementById('top-notification');
+    const navbar = document.querySelector('.sticky-navbar');
+
+    window.addEventListener('scroll', function () {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (currentScroll > lastScrollTop) {
+        // Cuộn xuống
+        topNotification.classList.add('hidden');
+        navbar.classList.add('hidden');
+      } else {
+        // Cuộn lên
+        topNotification.classList.remove('hidden');
+        navbar.classList.remove('hidden');
+      }
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Avoid negative values
+    });
+  </script>
+</body>
+
+</html>
