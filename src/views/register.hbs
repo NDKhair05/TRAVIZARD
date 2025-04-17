@@ -1,0 +1,129 @@
+<head>
+
+
+    <link rel="stylesheet" href="/css/regis.css" />
+
+
+</head>
+
+<body style="background-image: url('images/halongbay.jfif') ; background-repeat: no-repeat ">
+    <div class="content">
+        <form class="form" id="regis-form">
+            <p class="title">Đăng ký </p>
+            <p class="message">Chào mừng bạn đến với <img src="/images/logo-nonbackgr.png" alt="">
+            </p>
+            <div class="flex">
+                <label>
+                    <input required="" placeholder="" type="text" name="fullName" class="input">
+                    <span>Họ và tên</span>
+                </label>
+
+                <label>
+                    <input required="" placeholder="" type="text" name="tel" pattern="[0-9]{9,}" class="input">
+                    <span>Tel</span>
+                </label>
+            </div>
+
+            <label>
+                <input required="" placeholder="" type="email" name="email" class="input">
+                <span>Email</span>
+            </label>
+
+            <label>
+                <input required="" placeholder="" type="password" class="input">
+                <span>Mật khẩu</span>
+            </label>
+            <label>
+                <input required="" placeholder="" type="password" name="password" class="input">
+                <span>Xác nhận mật khẩu</span>
+            </label>
+            <button class="submit" type="submit">Đăng ký</button>
+            <p class="signin">Đã có tài khoản? <a href="/login">Đăng nhập</a> </p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('.input');
+
+            inputs.forEach(input => {
+                const span = input.nextElementSibling;
+
+                // Lắng nghe sự kiện khi giá trị của input thay đổi
+                input.addEventListener('input', function () {
+                    if (this.checkValidity()) {
+                        // Hợp lệ: Đổi màu span sang mặc định (hoặc xanh)
+                        span.style.setProperty('color', 'green')
+                        span.style.setProperty('top', '30px')
+                        span.style.setProperty('font-size', '0.7em')
+                        span.style.setProperty('font-weight', '600')
+
+                    } else if (!this.checkValidity()) {
+                        // Không hợp lệ: Đổi màu span sang đỏ
+                        span.style.setProperty('color', 'red')
+                        span.style.setProperty('top', '30px')
+                        span.style.setProperty('font-size', '0.7em')
+                        span.style.setProperty('font-weight', '600')
+                    }
+                });
+
+                // Lắng nghe khi form được submit (nếu có)
+                input.form?.addEventListener('submit', function (e) {
+                    if (!input.checkValidity()) {
+                        e.preventDefault(); // Ngăn gửi form nếu không hợp lệ
+                        alert('Vui lòng nhập đúng định dạng!');
+                    }
+                });
+
+            })
+        });
+
+
+        document.getElementById('regis-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công',
+                        text: result.message,
+                    }).then(() => {
+                        window.location.href = '/login'; // Chuyển hướng đến trang đăng nhập
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: result.message,
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Đã xảy ra lỗi trong quá trình xử lý',
+                });
+            }
+        });
+
+    </script>
+
+
+
+</body>

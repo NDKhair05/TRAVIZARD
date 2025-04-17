@@ -1,0 +1,341 @@
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
+    <link rel="stylesheet" href="/css/tourDetail.css">
+
+    {{!-- <style>
+        .main {
+            background-color: #ecf0f5;
+        }
+
+
+
+        .containers {
+
+            display: flex;
+            width: 90%;
+            height: fit-content;
+            margin: 45px 0 0 5%;
+            display: flex;
+            display: flex;
+        }
+
+        .tour-detail {
+            width: 70%;
+            height: fit-content;
+            margin: 5px;
+        }
+
+
+        .detail-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease-in-out;
+            width: 100%;
+            height: fit-content;
+            margin: 20px 0 20px 0;
+        }
+
+        .detail-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.3);
+            /* Bóng đổ khi hover */
+        }
+
+        #img-card {
+            height: 650px;
+            padding: 0;
+        }
+
+        #img-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .calendar {
+            background-color: #feeec7;
+            top: 0;
+            left: 90%;
+            position: sticky;
+            width: 30%;
+            height: 750px;
+            margin: 20px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .flatpickr-calendar {
+            font-size: 18px;
+            margin-left: 73px;
+        }
+
+        .flatpickr-day {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .number-container {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .number-container button {
+            border: none;
+        }
+
+        .number-container input {
+            border: none;
+        }
+
+        .marked-date {
+            background-color: green;
+            color: rgb(255, 0, 0);
+        }
+    </style> --}}
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="title-tour">
+            <h1>{{tour.tour_name}}</h1>
+        </div>
+
+        <div class="containers">
+            <div class="tour-detail">
+                <div class="detail-card" id="img-card">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            {{#each images}}
+                            <div class="swiper-slide">
+                                <img src="/{{this.img_url}}" alt="Tour image" srcset="">
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+
+                </div>
+                <div class="detail-card" id="general-card">
+                    <div class="departure" style="display: flex; gap: 15px;">
+                        <i class="fa-solid fa-location-dot" style="color: #ff0000; font-size:25px;margin-top: 4px;"></i>
+                        <h3>Khởi hành từ: {{tour.departure}}</h3>
+                    </div>
+
+                    <h3>Mã Tour: {{tour.tour_id}}</h3>
+
+                    <div class="duration" style="display: flex; gap: 15px;">
+                        <i class="fa-regular fa-clock" style="color: #000000; font-size: 25px ;margin-top: 4px;"></i>
+                        <h3>Thời Gian: {{tour.duration}}</h3>
+                    </div>
+                </div>
+                <div class="detail-card" id="departureDate" style="display: flex; ">
+                    <div style="display: flex; gap: 15px; margin-top: 6px;">
+                        <i class="fa-solid fa-calendar-days"
+                            style="color: #48bb9a; font-size: 25px;margin-top: 4px;"></i>
+                        <h3>Ngày Khởi Hành :</h3>
+                    </div>
+
+                    <h4 style="margin-left: 40px; margin-top: 7px; font-size: 26px;"> {{tour.dep_date}}
+                    </h4>
+                </div>
+                <div class="detail-card">
+                    <h2>Chương trình Tour</h2>
+                    <p style="font-size: 24px;">{{tour.description}}</p>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <h2 style="color: white;margin: 40px 0 20px 10% ; font-weight: bolder;">Lịch Trình và Giá Tour
+                </h2>
+                <p style="font-size: 22px; color: white;margin-left: 15%; margin-bottom: 0; ">Chọn Lịch và Xem Giá</p>
+
+                <form action="/book-tour" method="POST">
+                    <input id="datepicker"></input>
+                    <div class="number-container">
+                        <h5 style="    font-size: 24px; margin-top: 19px; margin-right: 25%;">Hành Khách: </h5>
+                        <button type="button" class="btn" id="decrease-btn">-</button>
+                        <input id="people-count" class="number-input" value="1" readonly style="width: 40px;">
+                        <button type="button" class="btn" id="increase-btn">+</button>
+                    </div>
+                    <div class="price">
+                        <h4 style="color: white; margin-right: 10%; ">Tổng giá tiền: </h4>
+                        <input id="total-price" class="total-price" value="" readonly></input>
+                    </div>
+                    <button type="submit" id="submitBtn">Xác Nhận Đặt Tour</button>
+                </form>
+            </div>
+
+        </div>
+
+        {{> footer}}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script>
+        new Swiper(".swiper", {
+            autoplay: {
+                delay: 4000,
+            },
+            cssMode: true,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Danh sách các ngày cần đánh dấu
+        const depDateString = "{{tour.dep_date}}"; // Giả sử tour.dep_date là một chuỗi ví dụ: "01-12-2024, 15-12-2024, 20-12-2024"
+        // Chuyển chuỗi dep_date thành mảng các ngày
+        const markedDates = depDateString.split(", ").map(date => {
+            const [day, month, year] = date.split("-"); // Tách ngày, tháng, năm
+            return `${year}-${month}-${day}`; // Chuyển về định dạng yyyy-mm-dd
+        });
+
+        // Khởi tạo Flatpickr
+        flatpickr("#datepicker", {
+            inline: true,
+            enable: markedDates, // Sử dụng mảng Date
+            dateFormat: "d-m-Y", // Định dạng ngày
+            mode: "multiple", // Cho phép chọn nhiều ngày
+            onChange: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 1) {
+                    // Nếu đã chọn hơn 1 ngày, bỏ ngày mới nhất
+                    selectedDates.pop();
+                    instance.setDate(selectedDates, false);
+                    alert("Bạn chỉ có thể chọn một ngày!");
+                }
+            }
+
+        });
+
+    </script>
+
+    <script>
+        function valueToVND(value) {
+            const options = {
+                style: 'currency',
+                currency: 'VND',
+                maximumFractionDigits: 9,
+            }
+            return new Intl.NumberFormat('vi-VN', options).format(value);
+        }
+
+        // Lấy các phần tử
+        const increaseBtn = document.getElementById('increase-btn');
+        const decreaseBtn = document.getElementById('decrease-btn');
+        const peopleCount = document.getElementById('people-count');
+        const totalPrice = document.getElementById('total-price')
+
+        // Số người hiện tại
+        const tourPrice = {{ tour.price }}
+        let count = parseInt(peopleCount.value);
+        let total = tourPrice
+        totalPrice.value = valueToVND(total);
+
+        // Chức năng tăng số người
+        increaseBtn.addEventListener('click', function () {
+            count++;
+            total += tourPrice
+            peopleCount.value = count;
+            totalPrice.value = valueToVND(total);
+        });
+
+        // Chức năng giảm số người
+        decreaseBtn.addEventListener('click', function () {
+            if (count > 1) {
+                count--;
+                total -= tourPrice;
+                peopleCount.value = count;
+                totalPrice.value = valueToVND(total);
+            }
+        });
+
+
+        // Gọi hàm để thiết lập trạng thái ban đầu
+        toggleButtons();
+    </script>
+
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', async function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định
+
+            // Lấy thông tin từ form
+            const selectedDate = document.getElementById('datepicker').value; // Ngày khởi hành
+            const numberOfPeople = document.getElementById('people-count').value; // Số người
+            const totalPrice = document.getElementById('total-price').value.replace(/[^0-9]/g, ''); // Xóa ký tự không phải số
+            const tourId = "{{tour.tour_id}}"; // Mã tour
+            const userId = "{{user.id}}"
+
+            if (!selectedDate) {
+                alert("Vui lòng chọn ngày khởi hành!");
+                return;
+            }
+            if (!numberOfPeople) {
+                alert("Vui lòng chọn số người!");
+                return;
+            }
+            if (!totalPrice) {
+                alert("Vui lòng chọn giá tiền!");
+                return;
+            }
+            if (!tourId) {
+                alert("Vui lòng chọn tour !");
+                return;
+            }
+            if (!userId) {
+                alert("Vui lòng chọn id!");
+                return;
+            }
+
+            // Gửi dữ liệu tới server
+            try {
+                const response = await fetch('/book-tour', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tourId: tourId,
+                        userId: userId,
+                        travelDate: selectedDate,
+                        numberOfPeople: numberOfPeople,
+                        totalPrice: totalPrice,
+                    }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(`Đặt tour thành công! Mã đặt chỗ: ${result.bookingId}`);
+                } else {
+                    const error = await response.text();
+                    alert(`Lỗi khi đặt tour: ${error}`);
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+                alert('Đã xảy ra lỗi, vui lòng thử lại!');
+            }
+        });
+
+    </script>
+</body>

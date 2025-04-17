@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/account.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link href="assets/css/aos.css" rel="stylesheet" />
+
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/aos.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <title>Đăng nhập tài khoản</title>
+    <style>
+        .invalid {
+            color: red;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body style="background-image: url('assets/images/halongbay.jfif') ; background-repeat: no-repeat ">
+    <div id="navbarPlaceholder" class="fixed-top"></div>
+    <!-- <a data-aos="zoom-up" href="index.html" class="exit" ><i class="fa-solid fa-door-open iconexit" style="color:#030f16 ; size: 100px;"></i></a> -->
+    <div data-aos="zoom-in" class="content">
+        <div class="containers" id="container">
+            <a onclick="window.history.back()" class="exit"><i class=" iconexit fa-solid fa-circle-xmark"></i></a>
+            <div class="form-container sign-up">
+                <form class="form" id="form-2">
+                    <h1 style="padding-top: 3px; color: #041675;">Đăng Ký</h1>
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Họ và tên</label>
+                        <input id="regisName" type="text" placeholder="Nguyễn Văn A">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="regisEmail" type="text" placeholder="VD: email@domain.com">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mật Khẩu</label>
+                        <input id="regisPassword" type="password" placeholder="Mật khẩu dài hơn 6 ký tự">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="firmPassword" class="form-label">Xác nhận mật khẩu</label>
+                        <input id="regisFirmPassword" type="password" placeholder="Nhập lại mật khẩu">
+                        <span class="form-message"></span>
+                    </div>
+                    <button id="register-main" class="btn" type="button" onclick="register()">Đăng ký</button>
+                </form>
+            </div>
+            <div class="form-container sign-in">
+                <form class="form" id="form-1">
+                    <h1 style="margin-bottom: 12%; color: #041675;">Đăng Nhập</h1>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="loginEmail" name="email" type="text" placeholder="VD:email@domain.com">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu">
+                        <span class="form-message invalid"></span>
+                    </div>
+                    <a href="#" style="text-decoration: underline;">Quên mật khẩu?</a>
+                    <button id="login-main" class="btn" type="button" onclick="login()">Đăng nhập</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <img src="assets/images/logo.png" style="max-width: 200px; margin-bottom: 40px;"
+                            alt="TRAVIZARD">
+                        <h1 class="text-white">Chào mừng bạn</h1>
+                        <p>Bạn đã có tài khoản? Hãy đăng nhập!</p>
+                        <button class="hidden btn mt-7" id="login">
+                            Đăng nhập
+                        </button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <img src="assets/images/logo.png" style="max-width: 200px; margin-bottom: 40px;"
+                            alt="TRAVIZARD">
+                        <h1 class="text-white">Xin chào</h1>
+                        <p>Đăng ký nếu bạn chưa có tài khoản</p>
+                        <button class="hidden btn mt-7" id="register">
+                            Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="scraper/account.js"></script>
+
+    <script>
+        AOS.init();
+        Validator({
+            form: '#form-1',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.minLength('#loginPassword', 6),
+                Validator.isEmail('#loginEmail'),
+            ]
+        });
+
+        Validator({
+            form: '#form-2',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#regisName'),
+                Validator.isRequired('#regisFirmPassword'),
+                Validator.isEmail('#regisEmail'),
+                Validator.minLength('#regisPassword', 6),
+                Validator.isConfirmed('#regisFirmPassword', function () {
+                    return document.querySelector('#form-2 #regisPassword').value;
+                }, 'Mật khẩu nhập lại không chính xác')
+
+            ]
+        })
+    </script>
+
+</body>
+
+</html>

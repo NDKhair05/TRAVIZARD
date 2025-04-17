@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<style>
+    /* Reset margin/padding */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Font and general styles */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+            /* Trượt từ trên xuống */
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Hiệu ứng biến mất */
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateX(20px);
+            /* Trượt lên trên */
+        }
+    }
+
+
+    .fw-bold {
+        font-weight: bold;
+    }
+
+    .fw-semibold {
+        font-weight: 600;
+    }
+
+    .text-white {
+        color: white;
+    }
+
+
+    /* Sticky navbar */
+    .sticky-navbar {
+        position: sticky;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #002033;
+        top: 45px;
+        /* Bên dưới Hotline */
+        z-index: 1030;
+        padding: 10px 0;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hidden effect */
+    .hidden {
+        transform: translateY(-100%);
+    }
+
+    .navbar-features {
+        transform: translateY(5px);
+    }
+
+    /* Navbar features */
+    .navbar-logo {
+        transform: translateX(15%);
+        /* margin: 0 20px 0 100px; */
+    }
+
+    .navbar-logo img {
+        height: 30px;
+    }
+
+    .navbar-textlink {
+        padding: 20px 12px 14px 12px;
+        transition-duration: 100ms;
+        color: white;
+    }
+
+    .navbar-textlink.active,
+    .navbar-textlink:hover {
+        border-bottom: 3px solid #58afe4;
+        color: #58afe4;
+    }
+
+
+    .navbar-account {
+        transform: translateX(-15%);
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        padding: 10px;
+        transition: color 0.3s;
+    }
+
+    .h4 {
+        font-size: 1.1rem;
+    }
+
+    .nav-item {
+        list-style: none;
+        display: inline-block;
+    }
+
+    .flash-contact {
+        margin: 0;
+    }
+
+    #top-notification {
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        background-color: #041675;
+        color: white;
+        padding: 10px 0;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .user-infor {
+        display: none;
+        opacity: 0;
+        animation-fill-mode: forwards;
+        margin: 15px 15px 0 0;
+        border-radius: 10px;
+        background-color: white;
+        z-index: 1000;
+        position: absolute;
+        right: 0px;
+        width: 250px;
+        height: 230px;
+    }
+
+    .user-infor.show {
+        display: block;
+        /* Hiển thị */
+        animation: fadeIn 0.5s ease-in-out;
+        /* Gọi hiệu ứng xuất hiện */
+    }
+
+    .user-infor.hide {
+        animation: fadeOut 0.5s ease-in-out;
+        /* Gọi hiệu ứng biến mất */
+    }
+
+    .user-infor .useric {
+        font-size: 30px;
+        position: absolute;
+        top: 10px;
+        right: 102px;
+    }
+
+    .user-infor .exit {
+        text-decoration: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .user-infor .user-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 45px;
+    }
+
+    .user-detail {
+        display: grid;
+        grid-template-columns: auto auto;
+        margin-top: 28px;
+    }
+
+    .user-detail label {
+        margin: 0px 0px 7px 7px;
+    }
+
+    .user-detail p {
+        margin-bottom: 7px;
+    }
+
+    .logout {
+        border: none;
+        padding: 8px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        margin: 0 15px 15px 0;
+        border-radius: 10px;
+        color: #ffffff;
+        background-color: #58b2e6;
+    }
+</style>
+
+</head>
+
+<body>
+
+    <div class="mainnav">
+        <!-- Sticky navbar -->
+        <nav class="navbar sticky-navbar">
+            <div class="navbar-logo">
+                <a href="index.html">
+                    <img src="/images/logo-nonbackgr.png" alt="Application logo" />
+                </a>
+            </div>
+            <div class="navbar-features">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="/" class="p-0 me-2 nav-link text-white fw-semibold">
+                            <span class="h4 navbar-textlink  {{#if isHome}}active{{/if}}">TRANG CHỦ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/tours" class="p-0 me-2 nav-link text-white fw-semibold">
+                            <span class="h4 navbar-textlink {{#if isTours}}active{{/if}}">TOURS</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/hotels" class="p-0 me-2 nav-link text-white fw-semibold">
+                            <span class="h4 navbar-textlink {{#if isHotels}}active{{/if}}">KHÁCH SẠN</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/introduction" class="p-0 me-2 nav-link text-white fw-semibold">
+                            <span class="h4 navbar-textlink {{#if isIntroduction}}active{{/if}}">GIỚI THIỆU</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="navbar-account">
+                <div class="topbar-features">
+                    {{#if user}}
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <label class="nav-link " id="userBtn">
+                                <i class="fa-solid fa-circle-user mx-2 fs-10"></i><span>{{user.name}}</span>
+                            </label>
+                        </li>
+
+                        {{#if (eq user.permission 'A')}}
+
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link">
+                                <i class="fa-solid fa-bars mx-2"></i><span>Quản lí</span>
+                            </a>
+                        </li>
+                        {{else}}
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">
+                                <i class="fa-solid fa-envelope mx-2"></i><span>Góp ý</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {{/if}}
+
+                    {{else}}
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">
+                                <i class="fa-solid fa-user mx-2"></i><span>Tài khoản</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {{/if}}
+
+
+                </div>
+            </div>
+
+
+            <div class="offcanvas-status" id="offcanvasPlaceholder"></div>
+        </nav>
+
+    </div>
+    <div class="user-infor" data-aos="fade-down">
+        <a class="exit">
+            <i class="fa-regular fa-x" style="color: #c2c2c2;"></i>
+        </a>
+        <i class="useric fa-solid fa-circle-user mx-2 fs-10"></i>
+        <div class="user-name">
+            <b class="name">{{user.name}}</b>
+        </div>
+        <div class="user-detail">
+            <label>Tel:</label>
+            <p>{{user.tel}}</p>
+            <label>Email:</label>
+            <p>{{user.email}}</p>
+        </div>
+
+        <button class="logout" onclick="location.href='/logout'">Đăng xuất</button>
+    </div>
+    <!-- <%- body%> -->
+
+    {{!-- Xử lí thông tin cá nhân của người dùng --}}
+
+    <script>
+        let userBtn = document.getElementById('userBtn')
+        let exitBtn = document.querySelector('.exit')
+        let userInfor = document.querySelector('.user-infor')
+        userBtn.addEventListener("click", () => {
+            userInfor.classList.remove('hide'); // Xóa class ẩn (nếu có)
+            userInfor.classList.add('show'); // Thêm class hiển thị
+            userInfor.style.display = 'block'; // Hiển thị phần tử
+        })
+        exitBtn.addEventListener("click", () => {
+            userInfor.classList.remove('show'); // Xóa class hiển thị
+            userInfor.classList.add('hide'); // Thêm class ẩn
+            setTimeout(() => {
+                userInfor.style.display = 'none'; // Ẩn hoàn toàn sau khi hiệu ứng kết thúc
+            }, 500);
+        })
+    </script>
+
+    <script>
+        const currentUrl = window.location.pathname.replace(/\/$/, ""); // Xóa dấu "/" ở cuối nếu có
+
+        // Tìm tất cả các mục menu
+        const menuItems = document.querySelectorAll('.navbar-textlink');
+
+        // So sánh URL và thêm class 'active'
+        menuItems.forEach(item => {
+            const href = item.getAttribute('href').replace(/\/$/, ""); // Xóa dấu "/" ở cuối nếu có
+            if (href === currentUrl) {
+                item.classList.add('active');
+            }
+        });
+    </script>
+
+    <!--xử lý khi cuộn-->
+    <script>
+        let lastScrollTop = 0;
+        const topNotification = document.getElementById('top-notification');
+        const navbar = document.querySelector('.sticky-navbar');
+
+        window.addEventListener('scroll', function () {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                // Cuộn xuống
+                topNotification.classList.add('hidden');
+                navbar.classList.add('hidden');
+            } else {
+                // Cuộn lên
+                topNotification.classList.remove('hidden');
+                navbar.classList.remove('hidden');
+            }
+
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Avoid negative values
+        });
+    </script>
+</body>
+
+</html>

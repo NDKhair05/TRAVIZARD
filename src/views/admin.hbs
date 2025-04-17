@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Trang Quản Trị Du Lịch</title>
+
+    <style>
+        .tour-details {
+            position: fixed;
+            top: 15%;
+            left: 10%;
+            height: 65%;
+            width: 40%;
+            background-color: aqua;
+            display: none;
+        }
+
+        .tour-img {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: relative;
+            top: 10px;
+            left: 93%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .no-scroll {
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Admin Dashboard Content -->
+
+    <div class="container-fluid admin-dashboard">
+        <div class="row">
+            <!-- Tour Management Section -->
+            <div class="col-12">
+                <h3>Quản Lý Tour Du Lịch</h3>
+                <table class="table table-bordered admin-table">
+                    <thead>
+                        <tr>
+                            <th>Mã Tour</th>
+                            <th>Tên Tour</th>
+                            <th>Mô tả</th>
+                            <th>Ngày khởi hành</th>
+                            <th>Điểm đến</th>
+                            <th>Giá</th>
+                            <th>Ảnh</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {{#each tours}}
+                        <tr>
+                            <td>{{this.tour_id}}</td>
+                            <td>{{this.tour_name}}</td>
+                            <td>{{this.description}}</td>
+                            <td>{{this.dep_date}}</td>
+                            <td>{{this.destination}}</td>
+                            <td>{{formatPrice this.price}}</td>
+                            <td><img src="{{this.tour_img}}" alt="" class="tour-img"></td>
+                            <td class="admin-actions">
+                                <button class="btn btn-warning edit-tour" data-tour-id="{{this.tour_id}}">Sửa</button>
+                                <button class="btn btn-danger" id="delete-tour">Xóa</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="popup-container" id="popup-container">
+                <div class="popup-content">
+                    <a class="close-btn" id="close-popup"><i class="fa-solid fa-arrow-right"
+                            style="color: #000000;"></i></a>
+                    <h3>Chi tiết Tour</h3>
+                    <form id="edit-tour-form">
+                        <div class="form-group">
+                            <label for="popupTourName">Tên Tour</label>
+                            <input type="text" id="popupTourName" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="popupTourDescrip">Mô tả Tour</label>
+                            <input type="text" id="popupTourDescrip" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="popupDepDate">Ngày Khởi Hành</label>
+                            <input type="text" id="popupDepDate" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="popupTourDestination">Điểm đến</label>
+                            <input type="text" id="popupTourDestination" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="popupPrice">Giá</label>
+                            <input type="text" id="popupPrice" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="popupTourImg">Hình Ảnh</label>
+                            <input type="text" id="popupTourImg" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Feedback Management Section -->
+            {{!-- <div class="col-md-6">
+                <h3>Quản Lý Bình Luận</h3>
+                <table class="table table-bordered admin-table">
+                    <thead>
+                        <tr>
+                            <th>Tên Người Dùng</th>
+                            <th>Nội Dung</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>Tour rất tuyệt vời!</td>
+                            <td class="admin-actions">
+                                <button class="btn btn-warning">Sửa</button>
+                                <button class="btn btn-danger">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Trần Thị B</td>
+                            <td>Khách sạn rất đẹp và tiện nghi.</td>
+                            <td class="admin-actions">
+                                <button class="btn btn-warning">Sửa</button>
+                                <button class="btn btn-danger">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> --}}
+
+        <!-- Add New Tour Form -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Thêm Mới Tour Du Lịch</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="tourName">Tên Tour</label>
+                        <input type="text" class="form-control" id="tourName" placeholder="Tên tour">
+                    </div>
+                    <div class="form-group">
+                        <label for="tourType">Loại Tour</label>
+                        <select class="form-control" id="tourType">
+                            <option>Trong Nước</option>
+                            <option>Nước Ngoài</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tourImage">Hình Ảnh Tour</label>
+                        <input type="file" class="form-control" id="tourImage">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Thêm Tour</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Du Lịch Vui. <a href="#">Điều khoản</a> | <a href="#">Chính sách bảo mật</a></p>
+    </footer>
+
+
+    <script>
+        AOS.init();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const editButtons = document.querySelectorAll('.edit-tour');
+            const popupContainer = document.getElementById('popup-container');
+            const closePopup = document.getElementById('close-popup');
+
+            const tourNameInput = document.getElementById('popupTourName');
+            const tourDescripInput = document.getElementById('popupTourDescrip');
+            const depDateInput = document.getElementById('popupDepDate');
+            const destinationInput = document.getElementById('popupTourDestination');
+            const priceInput = document.getElementById('popupPrice');
+            const tourImgInput = document.getElementById('popupTourImg');
+
+            // Lấy dữ liệu từ bảng và hiển thị trong popup
+            editButtons.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    const tourId = button.getAttribute('data-tour-id');
+                    const row = button.closest('tr');
+
+                    // Lấy dữ liệu từ hàng tương ứng
+                    const tourName = row.children[1].textContent;
+                    const desciption = row.children[2].textContent;
+                    const depDate = row.children[3].textContent;
+                    const destination = row.children[4].textContent;
+                    const price = row.children[5].textContent;
+                    const tourImg = row.querySelector('.tour-img').src;
+
+                    // Điền dữ liệu vào popup
+                    tourNameInput.value = tourName;
+                    tourDescripInput.value = desciption;
+                    depDateInput.value = depDate;
+                    destinationInput.value = destination;
+                    priceInput.value = price;
+                    tourImgInput.value = tourImg;
+
+                    // Hiển thị popup
+                    popupContainer.style.display = 'flex';
+                    document.body.classList.add('no-scroll')
+                });
+            });
+
+            // Đóng popup
+            closePopup.addEventListener('click', () => {
+                popupContainer.style.display = 'none';
+                document.body.classList.remove('no-scroll')
+            });
+
+            // Ẩn popup khi nhấn ra ngoài
+            /*  popupContainer.addEventListener('click', (event) => {
+                  if (event.target === popupContainer) {
+                      popupContainer.style.display = 'none';
+                  }
+              }); */
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.11.4",
+    "nodemon": "^3.1.7",
+    "sweetalert2": "^11.14.5"
+  },
+  "name": "travel-web---dacs2",
+  "version": "1.0.0",
+  "description": "Web cuối kì - TEAM WebWizards - 23GITB :)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon --inspect src/server.js",
+    "watch": "sass --watch src/resources/scss/search_form.scss src/public/css/search_form.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NDKhair05/TRAVIZARD.git"
+  },
+  "keywords": [
+    "travelweb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NDKhair05/TRAVIZARD/issues"
+  },
+  "homepage": "https://github.com/NDKhair05/TRAVIZARD#readme",
+  "devDependencies": {
+    "sass": "^1.81.0"
+  }
+}

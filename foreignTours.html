@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Danh sách chuyến đi ở Việt Nam</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+  <!-- Fonts -->
+  <!-- CSS files -->
+  <link rel="stylesheet" href="assets/css/font-awesome.css" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/image-hover.css">
+  <link href="assets/css/aos.css" rel="stylesheet" />
+
+  <link rel="icon"
+    href="https://scontent.xx.fbcdn.net/v/t1.15752-9/440835527_1136786374199039_1045185982473270085_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=iB99M7OTNLoQ7kNvgEZtr6h&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&_nc_gid=Aj6RDrEfR2urSpW6rcb08aA&oh=03_Q7cD1QGuYoMgvnALzuhtnf7JaJnE_ytatI5T9CB7ZYxRYbdceg&oe=672F2116"
+    type="image/x-icon">
+
+
+
+  <!-- CSS files -->
+  <!-- JavaScript files -->
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/aos.js"></script>
+  <script src="assets/js/sweetalert.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <!-- JavaScript files -->
+  <style>
+    /* Chatbot styles */
+
+    #chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    #chatbot-icon {
+      width: 60px;
+      height: 60px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    #chatbot-box {
+      width: 300px;
+      height: 400px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      display: none;
+      flex-direction: column;
+    }
+
+    #chatbot-header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chatbot-header span {
+      font-size: 16px;
+    }
+
+    #chatbot-header button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #chatbot-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    #chatbot-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    #chatbot-input-container {
+      display: flex;
+    }
+
+    #chatbot-input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px 0 0 5px;
+    }
+
+    #send-chatbot-message {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+
+    /* Avatar and message styles */
+    .chatbot-message {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chatbot-message.user {
+      justify-content: flex-end;
+    }
+
+    .chatbot-message.bot {
+      justify-content: flex-start;
+    }
+
+    .chatbot-message .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 20px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .chatbot-message.user .avatar {
+      margin-left: 10px;
+      /* Avatar nằm bên phải */
+    }
+
+    .chatbot-message.bot .avatar {
+      margin-right: 10px;
+      /* Avatar nằm bên trái */
+    }
+
+    .chatbot-message .text {
+      max-width: 70%;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .chatbot-message.user .text {
+      background-color: #007bff;
+      color: white;
+      text-align: left;
+      border-radius: 10px 10px 10px 0;
+      order: -1;
+      /* Đảo vị trí tin nhắn nằm trước avatar */
+    }
+
+    .chatbot-message.bot .text {
+      background-color: #f1f1f1;
+      color: black;
+      text-align: left;
+      border-radius: 10px 10px 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbarPlaceholder"></div>
+  <!-- Page content -->
+  <div class="container-fill">
+    <div class="row p-3 mt-2 tour-types d-flex justify-content-center" data-aos="fade-right">
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="vietnamTours.html"><i class="fa-solid fa-glasses fa-xl mx-2"></i>DU LỊCH
+          TRONG NƯỚC</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="foreignTours.html"><i class="fa-solid fa-wine-glass fa-xl mx-2"></i>DU LỊCH
+          NƯỚC NGOÀI</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+
+        <a class="tours-heading-link" href="introduction.html"><i class="fa-solid fa-home fa-xl mx-2"></i>GIỚI THIỆU</a>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center tour-type m-2 p-4">
+        <a class="tours-heading-link" href="hotels.html"><i class="fa-solid fa fa-hotel fa-xl mx-2"></i>CHO THUÊ KHÁCH
+          SẠN</a>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mx-5 mt-5 mb-3">
+      <a class="tours-heading-link">DANH SÁCH TOUR NƯỚC NGOÀI</a>
+    </div>
+    <div class="px-5">
+      <div class="row" id="foreignTours"></div>
+      <div class="row">
+        <div class="d-flex justify-content-center col" id="pagination"></div>
+      </div>
+    </div>
+
+    <!-- Chatbot Support -->
+    <div id="chatbot-container">
+      <div id="chatbot-icon">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div id="chatbot-box">
+        <div id="chatbot-header">
+          <span>CSKH</span>
+          <button id="close-chatbot">X</button>
+        </div>
+        <div id="chatbot-content">
+          <div id="chatbot-messages"></div>
+          <div id="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Nhập tin nhắn..." />
+            <button id="send-chatbot-message">Gửi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Foreign tours swiper -->
+    <div id="footerPlaceholder"></div>
+  </div>
+  <!-- Page content -->
+  <script>
+    AOS.init();
+
+    document.getElementById("chatbot-icon").addEventListener("click", () => {
+      document.getElementById("chatbot-box").style.display = "flex";
+    });
+
+    document.getElementById("close-chatbot").addEventListener("click", () => {
+      document.getElementById("chatbot-box").style.display = "none";
+    });
+
+    const addMessage = (sender, text) => {
+      const messagesContainer = document.getElementById("chatbot-messages");
+
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("chatbot-message", sender);
+
+      const avatarElement = document.createElement("div");
+      avatarElement.classList.add("avatar");
+
+      // Avatar tùy chỉnh theo người gửi
+      if (sender === "bot") {
+        avatarElement.style.backgroundImage = "url('assets/images/robot.png')";
+      } else if (sender === "user") {
+        avatarElement.style.backgroundImage = "url('assets/images/profile-user.png')";
+      }
+
+      const textElement = document.createElement("div");
+      textElement.classList.add("text");
+      textElement.textContent = text;
+
+      // Căn chỉnh nội dung theo người gửi
+      if (sender === "user") {
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(avatarElement);
+      } else {
+        messageElement.appendChild(avatarElement);
+        messageElement.appendChild(textElement);
+      }
+
+      messagesContainer.appendChild(messageElement);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+
+    // Gửi yêu cầu tới OpenAI API để lấy phản hồi từ ChatGPT
+    const fetchChatGPTResponse = async (userMessage) => {
+      const apiKey = "YOUR_API_KEY";  // Thay YOUR_API_KEY bằng API Key của bạn
+      const endpoint = "https://api.openai.com/v1/chat/completions";  // Cập nhật endpoint phù hợp với API mới
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",  // Bạn có thể thay đổi model nếu cần
+            messages: [{ role: "user", content: userMessage }],
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Request failed with status " + response.status);
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;  // Lấy nội dung phản hồi của chatbot
+      } catch (error) {
+        console.error("Error fetching response from OpenAI:", error);
+        return "Có lỗi khi lấy phản hồi từ chatbot.";
+      }
+    };
+
+    const sendMessage = async () => {
+      const input = document.getElementById("chatbot-input");
+      const message = input.value.trim();
+
+      if (message) {
+        // Thêm tin nhắn của người dùng
+        addMessage("user", message);
+
+        // Gọi API để lấy phản hồi từ ChatGPT
+        const botResponse = await fetchChatGPTResponse(message);
+
+        // Thêm phản hồi của ChatGPT
+        addMessage("bot", botResponse);
+
+        // Xóa nội dung nhập
+        input.value = "";
+      }
+    };
+
+    document.getElementById("send-chatbot-message").addEventListener("click", sendMessage);
+
+    document.getElementById("chatbot-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+  </script>
+</body>
+
+</html>
